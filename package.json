@@ -1,0 +1,24 @@
+{
+  "name": "csv-filter",
+  "version": "1.0.0",
+  "description": "Filter CSV rows using criteria for columns values and save the result as a new CSV",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jameswmoody/csv-filter.git"
+  },
+  "author": "James W Moody <james@wmoody.me> (http://jameswmoody.com)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jameswmoody/csv-filter/issues"
+  },
+  "homepage": "https://github.com/jameswmoody/csv-filter#readme",
+  "dependencies": {
+    "boom": "^7.3.0",
+    "csv-string": "^3.1.5",
+    "lodash": "^4.17.11"
+  }
+}
