@@ -30,3 +30,12 @@ exports.filterCsv = function (csv, filterOpts, callback) {
     }
     return callback(null, filteredCsv);
 }
+
+
+// TODO: Write sort function
+// exports.sortCsv = function (csv, sortOpts, callback) {
+    // const csvArray = csvString.parse(csv);
+    // const firstRow = csvArray[0];
+    // const sortedCsv = [];
+    // let sortColumnIndex;
+// }
