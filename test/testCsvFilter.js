@@ -30,10 +30,23 @@ describe('CSV filter function', function () {
         });
     });
 
-    it('should filter CSV based on critria when column number is provided', function (done) {
+    it('should filter CSV based on critria when column number string is provided', function (done) {
         const filterOpts = {
             hasHeader: true,
             columnToFilter: '4',
+            filterCriteria: 'CA'
+        }
+        csvFilter(csv, filterOpts, function (err, filteredCsv) {
+            assert.ifError(err);
+            expect(filteredCsv).to.equal('Address Number,Address Street,City,State,Zip\n11111,De Anza Blvd,Cupertino,CA,95014\n44444,Mission St,San Francisco,CA,95001');
+            done();
+        });
+    });
+
+    it('should filter CSV based on critria when column number integer is provided', function (done) {
+        const filterOpts = {
+            hasHeader: true,
+            columnToFilter: 4,
             filterCriteria: 'CA'
         }
         csvFilter(csv, filterOpts, function (err, filteredCsv) {
@@ -55,6 +68,58 @@ describe('CSV filter function', function () {
         csvFilter(csv, filterOpts, function (err, filteredCsv) {
             assert.ifError(err);
             expect(filteredCsv).to.equal('11111,De Anza Blvd,Cupertino,CA,95014\n44444,Mission St,San Francisco,CA,95001');
+            done();
+        });
+    });
+
+    it('should return error if no CSV string is provided', function (done) {
+        const filterOpts = {
+            hasHeader: false,
+            columnToFilter: '4',
+            filterCriteria: 'CA'
+        }
+        csvFilter(null, filterOpts, function (err, filteredCsv) {
+            expect(filteredCsv).to.not.be.ok;
+            expect(err.message).to.equal('Unable to parse CSV string. Make sure that a valid CSV string has been provided.')
+            done();
+        });
+    });
+
+    it('should return error if invalid CSV string is provided', function (done) {
+        const filterOpts = {
+            hasHeader: false,
+            columnToFilter: '4',
+            filterCriteria: 'CA'
+        }
+        csvFilter([1,2,3], filterOpts, function (err, filteredCsv) {
+            expect(filteredCsv).to.not.be.ok;
+            expect(err.message).to.equal('Unable to parse CSV string. Make sure that a valid CSV string has been provided.')
+            done();
+        });
+    });
+
+    it('should return error if no column is provided', function (done) {
+        const filterOpts = {
+            hasHeader: true,
+            columnToFilter: null,
+            filterCriteria: 'CA'
+        }
+        csvFilter(csv, filterOpts, function (err, filteredCsv) {
+            expect(filteredCsv).to.not.be.ok;
+            expect(err.message).to.equal('Must provide a column name or number to filter CSV by.')
+            done();
+        });
+    });
+
+    it('should return error if no criteria is provided', function (done) {
+        const filterOpts = {
+            hasHeader: true,
+            columnToFilter: '4',
+            filterCriteria: null
+        }
+        csvFilter(csv, filterOpts, function (err, filteredCsv) {
+            expect(filteredCsv).to.not.be.ok;
+            expect(err.message).to.equal('Must provide a criteria to filter CSV by.')
             done();
         });
     });
