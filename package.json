@@ -4,7 +4,8 @@
   "description": "Filter and sort CSV rows using criteria for columns values and save the result as a new CSV",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npm run mocha",
+    "mocha": "TZ=UTC mocha"
   },
   "repository": {
     "type": "git",
@@ -17,7 +18,9 @@
   },
   "homepage": "https://github.com/jameswmoody/csv-filter-sort#readme",
   "dependencies": {
+    "assert": "^1.4.1",
     "boom": "^7.3.0",
+    "chai": "^4.2.0",
     "csv-string": "^3.1.5",
     "lodash": "^4.17.11"
   }
