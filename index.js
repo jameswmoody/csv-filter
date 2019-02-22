@@ -4,7 +4,7 @@ const boom = require('boom');
 const async = require('async');
 const csvString = require('csv-string');
 
-exports.filterCsv = function (csv, filterOpts, callback) {
+exports.filter = function (csv, filterOpts, callback) {
     let csvArray;
 
     try {

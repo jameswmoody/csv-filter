@@ -7,14 +7,14 @@ Filter CSV rows using criteria for columns values and save the result as a new C
 To use the csv-filter-sort library, just import it into your project:
 
 ```
-const csvFilter = require('csv-filter-sort');
+const csvFilterSort = require('csv-filter-sort');
 ```
 
-In the example above, the library is imported as `csvFilter` through which you can access the library's filter and sort (coming soon!) functions.
+In the example above, the library is imported as `csvFilterSort` through which you can access the library's filter and sort (coming soon!) functions.
 
 ### Reference
 
-#### `filterCsv(csv, filterOptions, callback)`
+#### `filter(csv, filterOptions, callback)`
 
 **Parameters:**
 
@@ -22,7 +22,7 @@ In the example above, the library is imported as `csvFilter` through which you c
 | --------------- | -------- |
 | `csv`           | String   |
 | `filterOptions` | Object   |
-| `callback`      | String   |
+| `callback`      | Function |
 
 
 **`csv`:** A comma seperated list of values with each comma representing a new column. Use `\n` to represent the end of a row.
@@ -39,24 +39,41 @@ In the example above, the library is imported as `csvFilter` through which you c
     columnToFilter: 'City',
     filterCriteria: 'Chicago'
 }
+
+OR
+
+{
+    hasHeader: false,
+    columnToFilter: 4,
+    filterCriteria: 'CA'
+}
 ```
+
+| Name            | Type               |
+| --------------- | ------------------ |
+| `hasHeader`     | Boolean            |
+| `columnToFilter`| String or integer  |
+| `filterCriteria`| String             |
 
 ## Examples
 
 ```
+const csvFilterSort = require('csv-filter-sort');
+
 const csv = 'Address Number,Address Street,City,State,Zip\n' +
             '11111,De Anza Blvd,Cupertino,CA,95014\n' +
             '22222,Main St,Chicago,IL,60605\n' +
             '22211,Michigan Ave,Chicago,IL,60607\n' +
             '33333,Woodward Ave,Detroit,MI,48048\n' +
             '44444,Mission St,San Francisco,CA,95001\n';
+
 const opts = {
     hasHeader: true,
     columnToFilter: 'City',
     filterCriteria: 'Chicago'
 }
 
-filterCsv(csv, filterOptions, function (err, filteredCsv) {
+csvFilterSort.filter(csv, filterOptions, function (err, filteredCsv) {
     if (err) {
         return err;
     }

@@ -4,7 +4,7 @@ const assert = require('assert');
 const chai = require('chai');
 const expect = chai.expect;
 
-const csvFilter = require('..').filterCsv;
+const csvFilter = require('..').filter;
 
 describe('CSV filter function', function () {
     let csv;
