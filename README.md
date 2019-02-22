@@ -4,7 +4,13 @@ Filter CSV rows using criteria for columns values and save the result as a new C
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+To use the csv-filter-sort library, just import it into your project:
+
+```
+const csvFilter = require('csv-filter-sort');
+```
+
+In the example above, the library is imported as `csvFilter` through which you can access the library's filter and sort (coming soon!) functions.
 
 ### Reference
 
@@ -12,11 +18,12 @@ These instructions will get you a copy of the project up and running on your loc
 
 **Parameters:**
 
-| Name            | Type     | Description                                         |
-| --------------- | -------- | --------------------------------------------------- |
-| `csv`           | String   | A string that respesents the CSV to filter.         |
-| `filterOptions` | Object   | An object containing the filter configuration.      |
-| `callback`      | String   | The function to run once the CSV has been filtered. |
+| Name            | Type     |
+| --------------- | -------- |
+| `csv`           | String   |
+| `filterOptions` | Object   |
+| `callback`      | String   |
+
 
 **`csv`:** A comma seperated list of values with each comma representing a new column. Use `\n` to represent the end of a row.
 
