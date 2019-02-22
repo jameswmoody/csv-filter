@@ -1,6 +1,6 @@
 {
   "name": "csv-filter-sort",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Filter and sort CSV rows using criteria for columns values and save the result as a new CSV",
   "main": "index.js",
   "scripts": {
