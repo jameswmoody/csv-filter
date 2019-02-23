@@ -35,7 +35,8 @@ describe('CSV filter function', function () {
         const filterOpts = {
             hasHeader: true,
             columnToFilter: '4',
-            filterCriteria: 'CA'
+            filterCriteria: 'CA',
+            filterType: 'EXACT'
         }
         csvFilter(csv, filterOpts, function (err, filteredCsv) {
             assert.ifError(err);
@@ -48,11 +49,68 @@ describe('CSV filter function', function () {
         const filterOpts = {
             hasHeader: true,
             columnToFilter: 4,
-            filterCriteria: 'CA'
+            filterCriteria: 'CA',
+            filterType: 'exact'
         }
         csvFilter(csv, filterOpts, function (err, filteredCsv) {
             assert.ifError(err);
             expect(filteredCsv).to.equal('Address Number,Address Street,City,State,Zip\n11111,De Anza Blvd,Cupertino,CA,95014\n44444,Mission St,San Francisco,CA,95001');
+            done();
+        });
+    });
+
+    it('should filter CSV for values less than criteria', function (done) {
+        const filterOpts = {
+            hasHeader: true,
+            columnToFilter: 1,
+            filterCriteria: 30000,
+            filterType: 'LESS'
+        }
+        csvFilter(csv, filterOpts, function (err, filteredCsv) {
+            assert.ifError(err);
+            expect(filteredCsv).to.equal('Address Number,Address Street,City,State,Zip\n11111,De Anza Blvd,Cupertino,CA,95014\n22222,Main St,Chicago,IL,60605\n22211,Michigan Ave,Chicago,IL,60607');
+            done();
+        });
+    });
+
+    it('should filter CSV for values greater than criteria', function (done) {
+        const filterOpts = {
+            hasHeader: true,
+            columnToFilter: 1,
+            filterCriteria: '30000',
+            filterType: 'greater'
+        }
+        csvFilter(csv, filterOpts, function (err, filteredCsv) {
+            assert.ifError(err);
+            expect(filteredCsv).to.equal('Address Number,Address Street,City,State,Zip\n33333,Woodward Ave,Detroit,MI,48048\n44444,Mission St,San Francisco,CA,95001');
+            done();
+        });
+    });
+
+    it('should use character length when string criters is used with LESS filter type', function (done) {
+        const filterOpts = {
+            hasHeader: true,
+            columnToFilter: 2,
+            filterCriteria: '11',
+            filterType: 'less'
+        }
+        csvFilter(csv, filterOpts, function (err, filteredCsv) {
+            assert.ifError(err);
+            expect(filteredCsv).to.equal('Address Number,Address Street,City,State,Zip\n22222,Main St,Chicago,IL,60605\n44444,Mission St,San Francisco,CA,95001');
+            done();
+        });
+    });
+
+    it('should use character length when string criters is used with GREATER filter type', function (done) {
+        const filterOpts = {
+            hasHeader: true,
+            columnToFilter: 2,
+            filterCriteria: '10',
+            filterType: 'GREATER'
+        }
+        csvFilter(csv, filterOpts, function (err, filteredCsv) {
+            assert.ifError(err);
+            expect(filteredCsv).to.equal('Address Number,Address Street,City,State,Zip\n11111,De Anza Blvd,Cupertino,CA,95014\n22211,Michigan Ave,Chicago,IL,60607\n33333,Woodward Ave,Detroit,MI,48048');
             done();
         });
     });

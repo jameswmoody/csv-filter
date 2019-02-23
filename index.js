@@ -26,6 +26,7 @@ exports.filter = function (csv, filterOpts, callback) {
   
     if (filterOpts.hasHeader) {
       filteredCsv.push(firstRow);
+      csvArray.shift();
     }
 
     if (typeof filterOpts.columnToFilter === 'string' && !parseInt(filterOpts.columnToFilter)) {
@@ -34,10 +35,39 @@ exports.filter = function (csv, filterOpts, callback) {
       filterColumnIndex = parseInt(filterOpts.columnToFilter) - 1;
     }
 
+    if (!filterOpts.filterType) {
+      filterOpts.filterType = 'EXACT';
+    }
+
     async.each(csvArray, function(row, callback) {
-      if (row[filterColumnIndex] === filterOpts.filterCriteria) {
-        filteredCsv.push(row);
+      if (filterOpts.filterType.toUpperCase() === 'LESS') {
+        // if filter critria is a string, use character length
+        if (typeof row[filterColumnIndex] === 'string' && !parseInt(row[filterColumnIndex])) {
+          if (row[filterColumnIndex].length < parseInt(filterOpts.filterCriteria)) {
+            filteredCsv.push(row);
+          }
+        } else {
+          if (parseInt(row[filterColumnIndex]) < parseInt(filterOpts.filterCriteria)) {
+            filteredCsv.push(row);
+          }
+        }
+      } else if (filterOpts.filterType.toUpperCase() === 'GREATER') {
+        // if filter critria is a string, use character length
+        if (typeof row[filterColumnIndex] === 'string' && !parseInt(row[filterColumnIndex])) {
+          if (row[filterColumnIndex].length > parseInt(filterOpts.filterCriteria)) {
+            filteredCsv.push(row);
+          }
+        } else {
+          if (parseInt(row[filterColumnIndex]) > parseInt(filterOpts.filterCriteria)) {
+            filteredCsv.push(row);
+          }
+        }
+      } else {
+        if (row[filterColumnIndex] === filterOpts.filterCriteria) {
+          filteredCsv.push(row);
+        }
       }
+
       callback();
     }, function(err) {
       filteredCsv = filteredCsv
