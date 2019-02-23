@@ -107,7 +107,7 @@ describe('CSV filter function', function () {
         }
         csvFilter(csv, filterOpts, function (err, filteredCsv) {
             expect(filteredCsv).to.not.be.ok;
-            expect(err.message).to.equal('Must provide a column name or number to filter CSV by.')
+            expect(err.message).to.equal('Must provide a column name or number to filter CSV rows by.')
             done();
         });
     });
@@ -120,7 +120,7 @@ describe('CSV filter function', function () {
         }
         csvFilter(csv, filterOpts, function (err, filteredCsv) {
             expect(filteredCsv).to.not.be.ok;
-            expect(err.message).to.equal('Must provide a criteria to filter CSV by.')
+            expect(err.message).to.equal('Must provide a criteria to filter CSV rows by.')
             done();
         });
     });
