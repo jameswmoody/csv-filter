@@ -1,6 +1,7 @@
 # csv-filter-sort
 
 [![npm version](http://img.shields.io/npm/v/csv-filter-sort.svg?style=flat)](https://npmjs.org/package/csv-filter-sort "View this project on npm")
+[![CircleCI](https://circleci.com/gh/jameswmoody/csv-filter-sort.svg?style=svg)](https://circleci.com/gh/jameswmoody/csv-filter-sort)
 
 Filter CSV rows using criteria for column values and save the result as a new CSV.
 
