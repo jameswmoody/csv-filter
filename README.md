@@ -49,11 +49,52 @@ OR
 }
 ```
 
-| Name            | Type               |
-| --------------- | ------------------ |
-| `hasHeader`     | Boolean            |
-| `columnToFilter`| String or integer  |
-| `filterCriteria`| String             |
+| Name            | Type               | Required | Default |
+| --------------- | ------------------ | -------- | ------- |
+| `hasHeader`     | Boolean            | `false`  | `false` |
+| `columnToFilter`| String or integer  | `true`   |         |
+| `filterCriteria`| String             | `true`   |         |
+
+#### `sort(csv, sortOptions, callback)`
+
+**Parameters:**
+
+| Name            | Type     |
+| --------------- | -------- |
+| `csv`           | String   |
+| `sortOptions`   | Object   |
+| `callback`      | Function |
+
+
+**`csv`:** A comma seperated list of values with each comma representing a new column. Use `\n` to represent the end of a row.
+
+```
+'Address Number,Address Street,City,State,Zip\n11111,De Anza Blvd,Cupertino,CA,95014\n'22222,Main St,Chicago,IL,60605'
+```
+
+**`sortOptions`:** An object containing options to be included within the sort configuration. Valid options include `hasHeader` (BOOLEAN), `sortByColumn` (STRING or INTEGER), `orderBy`, (STRING).
+
+```
+{
+    hasHeader: true,
+    sortByColumn: 'Zip',
+    orderBy: 'ASC'
+}
+
+OR
+
+{
+    hasHeader: false,
+    sortByColumn: 4,
+    orderBy: 'DESC'
+}
+```
+
+| Name            | Type               | Required | Default |
+| --------------- | ------------------ | -------- | ------- |
+| `hasHeader`     | Boolean            | `false`  | `false` |
+| `sortByColumn`  | String or integer  | `true`   |         |
+| `orderBy`       | String             | `false`  | `ASC`   | 
 
 ## Examples
 
@@ -65,12 +106,18 @@ const csv = 'Address Number,Address Street,City,State,Zip\n' +
             '22222,Main St,Chicago,IL,60605\n' +
             '22211,Michigan Ave,Chicago,IL,60607\n' +
             '33333,Woodward Ave,Detroit,MI,48048\n' +
-            '44444,Mission St,San Francisco,CA,95001\n';
+            '44444,Mission St,San Francisco,CA,95001';
 
-const opts = {
+const filterOptions = {
     hasHeader: true,
     columnToFilter: 'City',
     filterCriteria: 'Chicago'
+}
+
+const sortOptions = {
+    hasHeader: true,
+    sortByColumn: 4,
+    orderBy: 'DESC'
 }
 
 csvFilterSort.filter(csv, filterOptions, function (err, filteredCsv) {
@@ -78,9 +125,18 @@ csvFilterSort.filter(csv, filterOptions, function (err, filteredCsv) {
         return err;
     }
     return filteredCsv;
+
+    // Output: 'Address Number,Address Street,City,State,Zip\n22222,Main St,Chicago,IL,60605\n22211,Michigan Ave,Chicago,IL,60607'
 });
 
-// Output: 'Address Number,Address Street,City,State,Zip\n22222,Main St,Chicago,IL,60605\n22211,Michigan Ave,Chicago,IL,60607\n'
+csvFilterSort.sort(csv, sortOptions, function (err, sortedCsv) {
+    if (err) {
+        return err;
+    }
+    return sortedCsv;
+
+    // Output: 'Address Number,Address Street,City,State,Zip\n11111,De Anza Blvd,Cupertino,CA,95014\n44444,Mission St,San Francisco,CA,95001\n22211,Michigan Ave,Chicago,IL,60607\n22222,Main St,Chicago,IL,60605\n33333,Woodward Ave,Detroit,MI,48048'
+});
 ```
 
 ## Running the tests
