@@ -31,29 +31,32 @@ In the example above, the library is imported as `csvFilterSort` through which y
 'Address Number,Address Street,City,State,Zip\n11111,De Anza Blvd,Cupertino,CA,95014\n'22222,Main St,Chicago,IL,60605'
 ```
 
-**`filterOptions`:** An object containing options to be included within the filter configuration. Valid options include `hasHeader` (BOOLEAN), `columnToFilter` (STRING), `filterCriteria`, (STRING).
+**`filterOptions`:** An object containing options to be included within the filter configuration. Valid options include `hasHeader` (BOOLEAN), `columnToFilter` (STRING or INTEGER), `filterCriteria` (STRING or INTEGER), and `filterType` (STRING).
 
 ```
 {
     hasHeader: true,
     columnToFilter: 'City',
-    filterCriteria: 'Chicago'
+    filterCriteria: 'Chicago',
+    filterType: 'EXACT'
 }
 
 OR
 
 {
     hasHeader: false,
-    columnToFilter: 4,
-    filterCriteria: 'CA'
+    columnToFilter: 2,
+    filterCriteria: 10,
+    filterType: 'LESS'
 }
 ```
 
-| Name            | Type               | Required | Default |
-| --------------- | ------------------ | -------- | ------- |
-| `hasHeader`     | Boolean            | `false`  | `false` |
-| `columnToFilter`| String or integer  | `true`   |         |
-| `filterCriteria`| String             | `true`   |         |
+| Name            | Type               | Description                                              | Required | Default   |
+| --------------- | ------------------ | -------------------------------------------------------- | -------- | --------- |
+| `hasHeader`     | Boolean            | Specfies whether or not the first CSV row is a header. | `false`  | `false`   |
+| `columnToFilter`| String or integer  | The column name or number to filter by.                  | `true`   |           |
+| `filterCriteria`| String or integer  | The criteria to filter rows by. If string is provided, CSV will be filtered by character length of the value. | `true`   |           |
+| `filterType`    | String             | Options include `EXACT`, `LESS`, and `GREATER`.          | `false`  | `'EXACT'` |
 
 #### `sort(csv, sortOptions, callback)`
 
@@ -90,11 +93,11 @@ OR
 }
 ```
 
-| Name            | Type               | Required | Default |
-| --------------- | ------------------ | -------- | ------- |
-| `hasHeader`     | Boolean            | `false`  | `false` |
-| `sortByColumn`  | String or integer  | `true`   |         |
-| `orderBy`       | String             | `false`  | `ASC`   | 
+| Name            | Type               | Description                                              | Required | Default   |
+| --------------- | ------------------ | -------------------------------------------------------- | -------- | ------- |
+| `hasHeader`     | Boolean            | Specfies whether or not the first CSV row is a header. | `false`  | `false` |
+| `sortByColumn`  | String or integer  | The column name or number to sort by.                    | `true`   |         |
+| `orderBy`       | String             | Options include `ASC` and `DESC` for ascending and descending respectively.   | `false`  | `'ASC'`   | 
 
 ## Examples
 
@@ -111,7 +114,8 @@ const csv = 'Address Number,Address Street,City,State,Zip\n' +
 const filterOptions = {
     hasHeader: true,
     columnToFilter: 'City',
-    filterCriteria: 'Chicago'
+    filterCriteria: 'Chicago',
+    filterType: 'EXACT'
 }
 
 const sortOptions = {
