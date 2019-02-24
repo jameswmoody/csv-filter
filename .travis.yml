@@ -1,0 +1,13 @@
+language: node_js
+node_js:
+ - "node"
+script:
+  - npm test
+dependencies: {
+    "mocha": "^6.0.1",
+    "assert": "^1.4.1",
+    "async": "^2.6.2",
+    "chai": "^4.2.0",
+    "csv-string": "^3.1.5",
+    "lodash": "^4.17.11"
+}
