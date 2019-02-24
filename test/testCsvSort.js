@@ -165,4 +165,17 @@ describe('CSV sort function', () => {
       done();
     });
   });
+
+  it('should return error if invalid sort order is provided', (done) => {
+    const sortOpts = {
+      hasHeader: true,
+      sortByColumn: '2',
+      orderBy: 'banana',
+    };
+    csvSort(csv, sortOpts, (err, sortedCsv) => {
+      expect(sortedCsv).to.not.be.ok;
+      expect(err.message).to.equal("Invalid value provided for 'orderBy'. Use 'ASC' or 'DESC' to sort by ascending or decending order respectively.");
+      done();
+    });
+  });
 });
