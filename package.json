@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "npm run mocha",
-    "mocha": "TZ=UTC mocha",
+    "mocha": "TZ=UTC istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && codecov",
     "lint": "npm run eslint",
     "eslint": "eslint *.js 'index.js' 'test/**/*.js'"
   },
@@ -22,15 +22,22 @@
   "dependencies": {
     "assert": "^1.4.1",
     "async": "^2.6.2",
-    "chai": "^4.2.0",
     "csv-string": "^3.1.5",
     "lint": "^1.1.2",
     "lodash": "^4.17.11"
   },
+  "eslintConfig": {
+    "env": [
+      "mocha"
+    ]
+  },
   "devDependencies": {
+    "chai": "^4.2.0",
+    "codecov": "^3.2.0",
     "eslint": "^5.14.1",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.16.0",
+    "istanbul": "^0.4.5",
     "mocha": "^6.0.1"
   }
 }
