@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "npm run mocha",
-    "mocha": "TZ=UTC mocha"
+    "mocha": "TZ=UTC mocha",
+    "lint": "npm run eslint",
+    "eslint": "eslint *.js 'index.js' 'test/**/*.js'"
   },
   "repository": {
     "type": "git",
@@ -22,9 +24,13 @@
     "async": "^2.6.2",
     "chai": "^4.2.0",
     "csv-string": "^3.1.5",
+    "lint": "^1.1.2",
     "lodash": "^4.17.11"
   },
   "devDependencies": {
+    "eslint": "^5.14.1",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.16.0",
     "mocha": "^6.0.1"
   }
 }
